@@ -28,15 +28,14 @@ public class LoginOkDo implements MemberCommnend {
 		
 		if(result == 1) {
 			System.out.println("로그인이 되었습니다");
-			session.setAttribute(userId, "userId");
+			session.setAttribute("sessionId", userId);
 			session.setMaxInactiveInterval(60*60);
 			forwardURL = "/index.do";
 		}else {
 			System.out.println("다시 로그인해주세요");
-			forwardURL = "/login.do";
+			forwardURL = "/loginFail.jsp";
 		}
 		
-		request.setAttribute("result", result);
 		request.setAttribute("forwardURL", forwardURL);
 	}
 

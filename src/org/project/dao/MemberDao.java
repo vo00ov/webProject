@@ -63,7 +63,7 @@ public class MemberDao {
 		
 		return result;
 	}
-
+//====================================================================
 	// 로그인
 	public int loginDo(String userId, String userPw) {
 		ResultSet rs = null;
@@ -101,5 +101,39 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	public ArrayList<MemberDto> myInfo(String userId) {
+		ArrayList<MemberDto> list = new ArrayList<MemberDto>();
+		ResultSet rs = null;
+		try {
+			conn = DBConnect.getConnection();
+			sql = "select * from login1222 where userId=?";
+			pstm = conn.prepareStatement(sql);
+
+			pstm.setString(1, userId);
+			
+			rs = pstm.executeQuery();
+			
+			if(rs!=null) {
+				while(rs.next()) {
+					list.add(new MemberDto(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstm != null) pstm.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				
+			}
+		}
+		return list;
+	}
+
+
 
 }
